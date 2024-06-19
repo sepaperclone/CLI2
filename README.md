@@ -1,9 +1,8 @@
 # This is the Repo for ASE 2024 CLI2 clone detector
 
 ## Repo structure
-- dataset: the folder contains all the clone dataset, summmary
-- src: the folder contains the src code for the experiment
-- models: lora adaptors for the fine-tuned model.
+- dataset: the folder contains all the clone dataset, summmary, you need to download from the huggingface(https://huggingface.co/datasets/AnomalyPaper/CLI2_Dataset) because the file size limit.
+- models: the fine-tuned model weights, download from huggingface (https://huggingface.co/AnomalyPaper/CLI2).
 - README.md: readme file
 
 ## Dependency and Data Preparing:
@@ -21,7 +20,7 @@ you can also use the enviroment we build, which may take longer time:
 conda env create -f vllm.yml 
 ```
 ### Downloading Model
-CLI2 is based on Qwen-1.8B, you can download the model from huggingface(https://huggingface.co/Qwen/Qwen1.5-1.8B) or modelscope(https://modelscope.cn/models/qwen/Qwen1.5-1.8B/summary)
+CLI2 is based on Qwen-1.8B, you can download the model from huggingface([https://huggingface.co/Qwen/Qwen1.5-1.8B](https://huggingface.co/AnomalyPaper/CLI2))
 
 ### Llama Factory Dependency
 If you want to reproduce our experiment including the fine-tuning step, you need to download the Llama-Factory (https://github.com/hiyouga/LLaMA-Factory/), or use other fine-tuning framework you prefered.
@@ -74,7 +73,7 @@ CLI2 is published on huggingface:
 We provide a python script to load the model and detect a pair of code snippets. you can change the two codes into any code snippet you prefered.
 ```bash
 conda activate vllm
-python demo.py --base_path qwen1_8b # provide the base model path you downloaded.
+python demo.py --base_path qwen1_8b # provide the model path you downloaded.
 ```
 ### Run the Test Experiment:
 You can use `eval.py` to run the test experiment of our paper.

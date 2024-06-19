@@ -1,7 +1,10 @@
 # This is the Repo for ASE 2024 CLI2 clone detector
 
 ## Repo structure
-- dataset: the folder contains all the clone dataset, summmary, you need to download from the huggingface(https://huggingface.co/datasets/AnomalyPaper/CLI2_Dataset) because the file size limit.
+- dataset: the folder contains all the clone dataset, summmary, you can download them from the huggingface[(https://huggingface.co/datasets/AnomalyPaper/CLI2_Dataset)].
+  - gcj4.pkl: A Dataframe of pandas which contains all the code snippets and their functionality category.
+  - test_cross_fun.npy: A numpy array of test clone pairs from different functionality, which organized as [id1, id2, 0|1]
+  - test_cross_lan.npy: Numpy array of clone pairs from different language from fine-tuning dataset.
 - demo.py: script for running the detecting demo.
 - eval.py: script for running the eval experiment.
 - README.md: readme file
@@ -21,12 +24,12 @@ you can also use the enviroment we build, which may take longer time:
 conda env create -f vllm.yml 
 ```
 ### Downloading Model
-CLI2 is based on Qwen-1.8B, you can download the model from huggingface([https://huggingface.co/Qwen/Qwen1.5-1.8B](https://huggingface.co/AnomalyPaper/CLI2))
+CLI2 is based on Qwen-1.8B, you can download the model from huggingface([https://huggingface.co/AnomalyPaper/CLI2])
 
 ### Llama Factory Dependency
-If you want to reproduce our experiment including the fine-tuning step, you need to download the Llama-Factory (https://github.com/hiyouga/LLaMA-Factory/), or use other fine-tuning framework you prefered.
+**If you want to reproduce our fine-tuning experiment**, you need to download the Llama-Factory (https://github.com/hiyouga/LLaMA-Factory/), or use other fine-tuning framework you prefered.
 the dataset is organized as **alpaca** format.
-there are 3 .json files the dir *dataset*:
+there are 3 `.json` files the dir *dataset*(or you need to download from huggingface[((https://huggingface.co/datasets/AnomalyPaper/CLI2_Dataset))]):
 - fine_tuning_summary.json: dataset for the first stage fine-tuning
 - fine_tuning_mixed.json: dataset for the second stage fine-tuning
 - fine_tuning_dpo.json: dataset for the third stage fine-tuning
@@ -68,7 +71,7 @@ then you can use the script provided in `LLaMa-Factory/examples/lora` to run the
 ## Usage
 
 ### Downloading Model
-CLI2 is published on huggingface: 
+CLI2 is published on huggingface: https://huggingface.co/AnomalyPaper/CLI2
 
 ### Run a Demo
 We provide a python script to load the model and detect a pair of code snippets. you can change the two codes into any code snippet you prefered.

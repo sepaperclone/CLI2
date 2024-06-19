@@ -4,6 +4,7 @@ import torch
 import os
 import pandas as pd
 import json
+import argparse
 
 from transformers import AutoTokenizer
 from vllm import LLM, SamplingParams
@@ -12,7 +13,11 @@ from vllm import EngineArgs, LLMEngine, RequestOutput, SamplingParams
 from sklearn.metrics import precision_recall_fscore_support
 
 
-model_path = './LLaMA-Factory/models/qwen_java_dpo'
+parser = argparse.ArgumentParser()
+parser.add_argument('--model_path', default=None, type=str, required=True)
+args = parser.parse_args()
+model_path = args.model_path
+
 tokenizer = AutoTokenizer.from_pretrained(model_path)
 llm = LLM(model=model_path, tokenizer=model_path, max_model_len=8192)
 
@@ -87,7 +92,7 @@ def get_test_queries(test_data, test_count, code_dict):
 
 def eval_F():
     print("=== Eval for Cross Functionality Performance ===")
-    test_data = np.load('./dataset/test_java_pairs.npy')
+    test_data = np.load('./dataset/test_cross_fun.npy')
     test_df = pd.read_pickle('./dataset/gcj/gcj4.pkl')
     fids = [int(i) for i in test_df['funid'].tolist()]
     test_df = test_df[test_df['funid'].isin(fids)]
@@ -105,7 +110,7 @@ def eval_F():
 
 def eval_L():
     print("=== Eval for Cross Language Performance ===")
-    test_data = np.load('./dataset/test_cpp_python_php_pairs.npy')
+    test_data = np.load('./dataset/test_cross_lan.npy')
     test_df = pd.read_pickle('./dataset/gcj/gcj4.pkl')
     fids = [int(i) for i in test_df['funid'].tolist()]
     test_df = test_df[test_df['funid'].isin(fids)]

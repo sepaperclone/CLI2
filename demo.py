@@ -5,13 +5,19 @@ import os
 import pandas as pd
 import json
 
+import argparse
+
+
 from transformers import AutoTokenizer
 from vllm import LLM, SamplingParams
-from vllm.lora.request import LoRARequest
 from vllm import  SamplingParams
 
 
-model_path = './LLaMA-Factory/models/qwen_java_dpo'
+parser = argparse.ArgumentParser()
+parser.add_argument('--model_path', default=None, type=str, required=True)
+args = parser.parse_args()
+model_path = args.model_path
+
 tokenizer = AutoTokenizer.from_pretrained(model_path)
 llm = LLM(model=model_path, tokenizer=model_path, max_model_len=8192)
 

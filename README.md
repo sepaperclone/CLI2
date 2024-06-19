@@ -3,6 +3,8 @@
 ## Repo structure
 - dataset: the folder contains all the clone dataset, summmary, you need to download from the huggingface(https://huggingface.co/datasets/AnomalyPaper/CLI2_Dataset) because the file size limit.
 - models: the fine-tuned model weights, download from huggingface (https://huggingface.co/AnomalyPaper/CLI2).
+- demo.py: script for running the detecting demo.
+- eval.py: script for running the eval experiment.
 - README.md: readme file
 
 ## Dependency and Data Preparing:
@@ -75,6 +77,65 @@ We provide a python script to load the model and detect a pair of code snippets.
 conda activate vllm
 python demo.py --base_path qwen1_8b # provide the model path you downloaded.
 ```
+
+#### example
+*The final prompt in demo.py is as following*:
+
+You will be given a pair of code snippetsyou need to analyze the functionality of them, then determine if these two code snippets are code cloneand explain why according to the data of code snippet 1 and code snippet 2.respond with yes if they are clone, otherwise respond with no.Code clone means two code snippets share the same functionality or they are different implementations of the same problem.Each code snippet is delimited by triple backticks.
+[Code Snippet 1]: ```
+public static void main (String [] args) throws InterruptedException {
+    AtomicInteger counter = new AtomicInteger ();
+    ExecutorService pool = Executors.newFixedThreadPool (4);
+    for (int i = 0;
+    i < 4; ++ i) {
+        pool.execute (new MyTask (counter));
+    }
+    pool.shutdown ();
+    pool.awaitTermination (1, TimeUnit.HOURS);
+}
+```
+[Code Snippet 2]: ```
+
+#include <stdio.h> 
+#include <stdlib.h> 
+#include <pthread.h> 
+#include <time.h>  
+
+int atm_counter = 0;
+pthread_mutex_t counter_lock;
+
+void *mytask(void *arg) 
+{
+    pthread_mutex_lock(&counter_lock); 
+    atm_counter++;
+    pthread_mutex_unlock(&counter_lock); 
+    return NULL; 
+}
+
+int main()
+{
+    pthread_t threads[4];
+
+    for (int i = 0; i < 4; i++)
+        pthread_create(&threads[i], NULL, mytask, NULL);
+  
+    for (int i = 0; i < 4; i++)
+        pthread_join(threads[i], NULL);
+ 
+    sleep(3600);
+
+    return 0;
+}
+```
+
+*The output*:
+[Functionality of Code Snippet 1]:This Java code is used to manage a pool of tasks that need to be executed concurrently. It uses an ExecutorService to create a pool of worker threads, each responsible for executing a single task. The tasks are incremented in a counter before being executed. The main thread waits for all the worker threads to finish before exiting.
+
+[Functionality of Code Snippet 2]:This code is a solution to a problem from programing competition. It involves creating a thread for each test case and joining on the thread when it's done. The thread increments a counter every second and prints the current count at the end of the program. The main function creates four threads and joins on the threads when they're done. The threads are created using the `pthread_create` function.
+
+[Answer]:According to their functionalities, they are different implementations of the same functionality, so the answer is yes, they are code clone.
+
+
 ### Run the Test Experiment:
 You can use `eval.py` to run the test experiment of our paper.
 ```bash

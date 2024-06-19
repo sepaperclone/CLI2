@@ -82,7 +82,8 @@ python demo.py --base_path qwen1_8b # provide the model path you downloaded.
 *The final prompt in demo.py is as following*:
 
 You will be given a pair of code snippetsyou need to analyze the functionality of them, then determine if these two code snippets are code cloneand explain why according to the data of code snippet 1 and code snippet 2.respond with yes if they are clone, otherwise respond with no.Code clone means two code snippets share the same functionality or they are different implementations of the same problem.Each code snippet is delimited by triple backticks.
-[Code Snippet 1]: ```
+[Code Snippet 1]: 
+```java
 public static void main (String [] args) throws InterruptedException {
     AtomicInteger counter = new AtomicInteger ();
     ExecutorService pool = Executors.newFixedThreadPool (4);
@@ -94,8 +95,8 @@ public static void main (String [] args) throws InterruptedException {
     pool.awaitTermination (1, TimeUnit.HOURS);
 }
 ```
-[Code Snippet 2]: ```
-
+[Code Snippet 2]: 
+```cpp
 #include <stdio.h> 
 #include <stdlib.h> 
 #include <pthread.h> 
@@ -111,7 +112,6 @@ void *mytask(void *arg)
     pthread_mutex_unlock(&counter_lock); 
     return NULL; 
 }
-
 int main()
 {
     pthread_t threads[4];
@@ -129,6 +129,7 @@ int main()
 ```
 
 *The output*:
+
 [Functionality of Code Snippet 1]:This Java code is used to manage a pool of tasks that need to be executed concurrently. It uses an ExecutorService to create a pool of worker threads, each responsible for executing a single task. The tasks are incremented in a counter before being executed. The main thread waits for all the worker threads to finish before exiting.
 
 [Functionality of Code Snippet 2]:This code is a solution to a problem from programing competition. It involves creating a thread for each test case and joining on the thread when it's done. The thread increments a counter every second and prints the current count at the end of the program. The main function creates four threads and joins on the threads when they're done. The threads are created using the `pthread_create` function.

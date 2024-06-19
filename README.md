@@ -2,7 +2,6 @@
 
 ## Repo structure
 - dataset: the folder contains all the clone dataset, summmary, you need to download from the huggingface(https://huggingface.co/datasets/AnomalyPaper/CLI2_Dataset) because the file size limit.
-- models: the fine-tuned model weights, download from huggingface (https://huggingface.co/AnomalyPaper/CLI2).
 - demo.py: script for running the detecting demo.
 - eval.py: script for running the eval experiment.
 - README.md: readme file

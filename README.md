@@ -1,4 +1,4 @@
-# This is the Repo for ASE 2024 CLI2 clone detector
+# This is the Repo for CLI2 clone detector
 
 ## Repo structure
 - dataset: the folder contains all the clone dataset, summmary, you can download them from the huggingface[(https://huggingface.co/datasets/AnomalyPaper/CLI2_Dataset)].
